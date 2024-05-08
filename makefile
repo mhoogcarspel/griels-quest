@@ -2,6 +2,7 @@
 # use `make TARGET=gcw0` to build for GCW-Zero
 # use `make TARGET=pandora` to build for Pandora
 # use `make TARGET=pyra` to build for DragonBox Pyra
+# use `make TARGET=portmaster_armhf` to build for PortMaster armhf
 # and `make` for normal build
 #
 
@@ -24,6 +25,11 @@ endif
 ifeq "$(TARGET)" "pandora"
     CC		= pandora-gcc
     PFLAGS	= -march=armv7-a -mcpu=cortex-a8 -mtune=cortex-a8 -mfpu=vfpv3 -mfloat-abi=softfp -mthumb -DPANDORA
+endif
+ifeq "$(TARGET)" "portmaster_armhf"
+    CC		= gcc
+    # PFLAGS	= -march=armv7-a -mcpu=cortex-a8 -mtune=cortex-a8 -mfpu=vfpv3 -mfloat-abi=hardfp -mthumb
+    PFLAGS	= -march=armv7-a -DPORTMASTER
 endif
 ifeq "$(TARGET)" "pyra"
     CC		= gcc
@@ -78,3 +84,6 @@ uninstall:
 
 opk:	$(NAME)
 	./make_opk.sh
+
+pm:	$(NAME)
+	./make_pm_zip.sh
